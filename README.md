@@ -1,6 +1,8 @@
 # matrixLibrary
 C++ matrix library for fast computation
 
+[![buildAndTest](https://github.com/mdhardenburgh/matrixLibrary/actions/workflows/build-and-test-on-pull-request.yml/badge.svg)](https://github.com/mdhardenburgh/matrixLibrary/actions/workflows/build-and-test-on-pull-request.yml)
+
 ## Introduction
 The purpose of this project is to provide an easy to use standalone matrix library. It is designed to be in the style of a C standard library.
 
