@@ -1,0 +1,33 @@
+# Copyright (C) 2024 Matthew Hardenburgh
+# Build and test for GCC on linux 
+name: buildAndTest
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: gcc:9.4.0
+
+    steps: 
+    # checkout our repository
+    - uses: actions/checkout@v4
+    - name: Install CMake
+      run: |
+        wget https://github.com/Kitware/CMake/releases/download/v3.29.2/cmake-3.29.2-linux-x86_64.sh
+        chmod +x cmake-3.29.2-linux-x86_64.sh
+        ./cmake-3.29.2-linux-x86_64.sh --skip-license --prefix=/usr/local
+    - name: run cmake
+      run: cmake -S unitTest -B unitTest -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name: build tests
+      run: cmake --build unitTest --config ${{env.BUILD_TYPE}}
+    - name: run test
+      working-directory: unitTest
+      run: ctest -C ${{env.BUILD_TYPE}}
